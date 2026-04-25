@@ -1,0 +1,72 @@
+{
+  "neighborhoods": [
+    "Blmngtn",
+    "Blueste",
+    "BrDale",
+    "BrkSide",
+    "ClearCr",
+    "CollgCr",
+    "Crawfor",
+    "Edwards",
+    "Gilbert",
+    "Greens",
+    "GrnHill",
+    "IDOTRR",
+    "Landmrk",
+    "MeadowV",
+    "Mitchel",
+    "NAmes",
+    "NPkVill",
+    "NWAmes",
+    "NoRidge",
+    "NridgHt",
+    "OldTown",
+    "SWISU",
+    "Sawyer",
+    "SawyerW",
+    "Somerst",
+    "StoneBr",
+    "Timber",
+    "Veenker"
+  ],
+  "foundations": [
+    "BrkTil",
+    "CBlock",
+    "PConc",
+    "Slab",
+    "Stone",
+    "Wood"
+  ],
+  "house_styles": [
+    "1.5Fin",
+    "1.5Unf",
+    "1Story",
+    "2.5Fin",
+    "2.5Unf",
+    "2Story",
+    "SFoyer",
+    "SLvl"
+  ],
+  "bldg_types": [
+    "1Fam",
+    "2fmCon",
+    "Duplex",
+    "Twnhs",
+    "TwnhsE"
+  ],
+  "num_features": [
+    "Year Built",
+    "Garage Cars",
+    "1st Flr SF",
+    "Gr Liv Area",
+    "Full Bath",
+    "Year Built",
+    "Bedroom AbvGr"
+  ],
+  "cat_features": [
+    "Neighborhood",
+    "Foundation",
+    "House Style",
+    "Bldg Type"
+  ]
+}

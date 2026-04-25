@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ames House Price Predictor | ML Dashboard</title>
+  <meta name="description" content="Predict Ames Iowa house sale prices using a machine learning model trained on the Ames Housing Dataset." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <!-- ── Background particles ── -->
+  <div class="bg-particles" id="bgParticles"></div>
+
+  <!-- ── Page wrapper ── -->
+  <div class="page-wrapper">
+
+    <!-- ── Header ── -->
+    <header class="header">
+      <div class="header-inner">
+        <div class="logo">
+          <div class="logo-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+          </div>
+          <div class="logo-text">
+            <span class="logo-title">HouseAI</span>
+            <span class="logo-sub">Ames Price Predictor</span>
+          </div>
+        </div>
+        <div class="header-badges">
+          <span class="badge badge-green" id="apiStatus">● Connecting…</span>
+          <span class="badge badge-blue">R² = 0.8544</span>
+          <span class="badge badge-purple">Linear Regression</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- ── Main content ── -->
+    <main class="main">
+
+      <!-- ── Hero ── -->
+      <section class="hero">
+        <h1 class="hero-title">
+          Predict Your<br />
+          <span class="gradient-text">House Sale Price</span>
+        </h1>
+        <p class="hero-subtitle">
+          Powered by a machine learning model trained on <strong>2,927 Ames, Iowa homes</strong>.
+          Fill in the details below and get an instant price estimate.
+        </p>
+        <!-- Stats row -->
+        <div class="stats-row">
+          <div class="stat-card">
+            <span class="stat-num">2,927</span>
+            <span class="stat-lbl">Training Samples</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num">10</span>
+            <span class="stat-lbl">Key Features</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num">85.4%</span>
+            <span class="stat-lbl">Model Accuracy (R²)</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num">28</span>
+            <span class="stat-lbl">Neighborhoods</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Form Card ── -->
+      <div class="card-container">
+        <div class="form-card glass">
+          <div class="card-header">
+            <h2 class="card-title">🏡 Property Details</h2>
+            <p class="card-subtitle">Enter your home's characteristics</p>
+          </div>
+
+          <form id="predictForm" novalidate>
+
+            <!-- Row 1 -->
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label" for="yearBuilt">
+                  Year Built
+                  <span class="tooltip" data-tip="The original construction year">ⓘ</span>
+                </label>
+                <input class="form-input" type="number" id="yearBuilt" name="yearBuilt"
+                       min="1800" max="2025" value="2000" placeholder="e.g. 2005" />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="grLivArea">
+                  Above-Grade Living Area (sq ft)
+                  <span class="tooltip" data-tip="Total living area above ground">ⓘ</span>
+                </label>
+                <input class="form-input" type="number" id="grLivArea" name="grLivArea"
+                       min="0" value="1500" placeholder="e.g. 1500" />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="firstFlrSF">
+                  1st Floor Area (sq ft)
+                  <span class="tooltip" data-tip="First floor square footage">ⓘ</span>
+                </label>
+                <input class="form-input" type="number" id="firstFlrSF" name="firstFlrSF"
+                       min="0" value="900" placeholder="e.g. 900" />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="garageCars">
+                  Garage Capacity (cars)
+                  <span class="tooltip" data-tip="Number of cars the garage can hold">ⓘ</span>
+                </label>
+                <input class="form-input" type="number" id="garageCars" name="garageCars"
+                       min="0" max="5" step="0.5" value="2" placeholder="e.g. 2" />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="fullBath">
+                  Full Bathrooms
+                  <span class="tooltip" data-tip="Number of full bathrooms">ⓘ</span>
+                </label>
+                <input class="form-input" type="number" id="fullBath" name="fullBath"
+                       min="0" max="10" value="2" placeholder="e.g. 2" />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="bedroomAbvGr">
+                  Bedrooms (Above Grade)
+                  <span class="tooltip" data-tip="Bedrooms not in basement">ⓘ</span>
+                </label>
+                <input class="form-input" type="number" id="bedroomAbvGr" name="bedroomAbvGr"
+                       min="0" max="15" value="3" placeholder="e.g. 3" />
+              </div>
+            </div>
+
+            <!-- Row 2: Categoricals -->
+            <div class="section-divider">
+              <span>Location &amp; Structure</span>
+            </div>
+
+            <div class="form-grid form-grid-2">
+              <div class="form-group">
+                <label class="form-label" for="neighborhood">Neighborhood</label>
+                <select class="form-select" id="neighborhood" name="neighborhood">
+                  <option value="">Loading…</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="foundation">Foundation</label>
+                <select class="form-select" id="foundation" name="foundation">
+                  <option value="">Loading…</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="houseStyle">House Style</label>
+                <select class="form-select" id="houseStyle" name="houseStyle">
+                  <option value="">Loading…</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="bldgType">Building Type</label>
+                <select class="form-select" id="bldgType" name="bldgType">
+                  <option value="">Loading…</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Submit -->
+            <div class="submit-row">
+              <button class="btn-predict" type="submit" id="submitBtn">
+                <span class="btn-icon">🔮</span>
+                <span class="btn-text">Predict Price</span>
+                <span class="btn-arrow">→</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- ── Result Panel ── -->
+        <div class="result-panel glass" id="resultPanel">
+          <!-- idle state -->
+          <div class="result-idle" id="resultIdle">
+            <div class="idle-icon">🏠</div>
+            <p class="idle-text">Fill in the form and click <strong>Predict Price</strong> to get your estimate.</p>
+          </div>
+
+          <!-- loading state -->
+          <div class="result-loading" id="resultLoading" style="display:none">
+            <div class="spinner"></div>
+            <p>Crunching the numbers…</p>
+          </div>
+
+          <!-- result state -->
+          <div class="result-output" id="resultOutput" style="display:none">
+            <p class="result-label">Estimated Sale Price</p>
+            <div class="price-display" id="priceDisplay">$0</div>
+            <div class="price-bar-wrap">
+              <div class="price-bar-track">
+                <div class="price-bar-fill" id="priceBarFill"></div>
+              </div>
+              <div class="price-range-labels">
+                <span>$50k</span><span>$800k+</span>
+              </div>
+            </div>
+            <div class="result-meta" id="resultMeta"></div>
+            <button class="btn-reset" id="resetBtn">← Try Another</button>
+          </div>
+
+          <!-- error state -->
+          <div class="result-error" id="resultError" style="display:none">
+            <div class="error-icon">⚠️</div>
+            <p id="errorMessage">Something went wrong.</p>
+            <button class="btn-reset" id="errorResetBtn">← Try Again</button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- ── Footer ── -->
+    <footer class="footer">
+      <p>Built with <span class="heart">♥</span> using <strong>FastAPI</strong> + <strong>scikit-learn</strong> &nbsp;|&nbsp; Ames Housing Dataset (2006–2010)</p>
+    </footer>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
