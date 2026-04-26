@@ -7,7 +7,30 @@ venv/
 
 # Jupyter checkpoints
 .ipynb_checkpoints/
+**/.ipynb_checkpoints/
 
 # Python cache
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+
+# Model files (optional - remove this if you WANT to push your .pkl files)
+# *.pkl
+
+# Environment variables
+.env
+
+# VS Code settings
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
